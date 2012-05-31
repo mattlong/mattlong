@@ -19,23 +19,34 @@
       Licensed under the BSD License.
       http://yuilibrary.com/license/
       */
-      footer, header, section { display: block; }
       /*html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}*/
         
+      footer, header, section { display: block; }
+      a:hover,a:active { outline:0; }
+
       #sidebar { width:170px; padding:30px; position:fixed; top:0; bottom:0; border-right:2px solid #999; }
-      #header { margin-left:232px; height:120px; border-bottom:2px solid #999; }
+      #header { margin-left:232px; border-bottom:2px solid #999; }
       #main { margin-left:232px; }
 
       /* sidebar components */
-      #logo { text-align:center; }
+      #logo { }
 
-      #name { text-align:center; }
+      #name { }
       #name a { color:#000; text-decoration:none; }
       #name a:active, #name a:visited { color:#000; }
       #name a:hover { color:green; }
 
-      #nav-links { }
+      .round-buttons { list-style:none; margin:0 auto; padding:0; }
+      .round-buttons li { padding:6px 0 13px 0; } /* display:block; clear:both; float:none; */
+      .round-buttons a { border:2px solid #aaa; border-radius:40px; padding:5px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
+      .round-buttons a:hover { border-color:green; background-color:green; color:white; }
+
       #me-links { position:absolute; bottom:20px; }
+      #me-links li { padding:0 0 10px 0; }
+      #me-links a { border:0px solid #aaa; padding:5px 10px 5px 12px; }
+
+      /* header components */
+      #title { margin:0; padding:40px 30px; color:#444; }
 
     </style>
   </head>
@@ -46,7 +57,7 @@
 
       <h1 id="name"><a href="index.html">Matt Long</a></h1>
 
-      <ul id="nav-links">
+      <ul id="nav-links" class="round-buttons">
         <li><a href="https://crocodoc.com">Crocodoc</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Tools</a></li>
@@ -56,7 +67,7 @@
         <li><a href="#">Brother</a></li>
       </ul>
 
-      <ul id="me-links">
+      <ul id="me-links" class="round-buttons">
         <li><a target="_blank" href="https://github.com/mattlong">Github</a></li>
         <li><a target="_blank" href="http://twitter.com/#!/mateolargo">Twitter</a></li>
         <li><a href="mailto:example@test.com">Say Hello</a></li>
@@ -65,7 +76,7 @@
     </section>
 
     <section id="header">
-
+      <h2 id="title">Page headline here</h2>
     </section>
 
     <section id="main">
