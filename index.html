@@ -24,14 +24,14 @@
       footer, header, section { display: block; }
       a:hover,a:active { outline:0; }
 
-      #sidebar { width:170px; padding:30px; position:fixed; top:0; bottom:0; border-right:2px solid #999; }
+      #sidebar { width:170px; padding:20px 30px; position:fixed; top:0; bottom:0; border-right:2px solid #999; }
       #header { margin-left:232px; border-bottom:2px solid #999; }
       #main { margin-left:232px; }
 
       /* sidebar components */
-      #logo { }
+      #sigil { }
 
-      #name { }
+      #name { margin-top:10px; }
       #name a { color:#000; text-decoration:none; }
       #name a:active, #name a:visited { color:#000; }
       #name a:hover { color:green; }
@@ -53,12 +53,13 @@
   <body>
     <section id="sidebar">
 
-      <div id="logo"><a href="index.html"><img src="http://placehold.it/80x80" width="80" height="80"/></a></div>
+      <!--div id="sigil"><a href="index.html"><img src="http://placehold.it/120x120" width="120" height="120"/></a></div-->
+      <div id="sigil"><a href="index.html"><img src="rebel_starbird.png" width="120" height="120"/></a></div>
 
       <h1 id="name"><a href="index.html">Matt Long</a></h1>
 
       <ul id="nav-links" class="round-buttons">
-        <li><a href="https://crocodoc.com">Crocodoc</a></li>
+        <li><a target="_blank" href="https://crocodoc.com">Crocodoc</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Tools</a></li>
         <li><a href="#">Cellar</a></li>
