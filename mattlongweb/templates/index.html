@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="FAVICON.ico" type="image/vnd.microsoft.icon">
 
     <!--link rel='stylesheet' href='//fonts.googleapis.com/css?family=FONT1|FONT2ETC' type='text/css'-->
-    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}normalize.css">
     <style type="text/css">
       /*
       Retrieved 2012-05-29 from http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css
@@ -37,8 +37,8 @@
       #name a:hover { color:green; }
 
       .round-buttons { list-style:none; margin:0 auto; padding:0; }
-      .round-buttons li { padding:6px 0 13px 0; } /* display:block; clear:both; float:none; */
-      .round-buttons a { border:2px solid #aaa; border-radius:40px; padding:5px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
+      .round-buttons li { padding:6px 0 15px 0; } /* display:block; clear:both; float:none; */
+      .round-buttons a { border:2px solid #ccc; border-radius:40px; padding:4px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
       .round-buttons a:hover { border-color:green; background-color:green; color:white; }
 
       #me-links { position:absolute; bottom:20px; }
@@ -63,7 +63,7 @@
         <li><a href="#">Projects</a></li>
         <li><a href="#">Tools</a></li>
         <li><a href="#">Cellar</a></li>
-        <li><a href="#">Music</a></li>
+        <li><a href="music">Music</a></li>
         <li><a href="#">Nostalgia</a></li>
         <li><a href="#">Brother</a></li>
       </ul>
@@ -85,7 +85,7 @@
     </section>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="{{STATIC_URL}}thirdparty/jquery-1.7.2.min.js"><\/script>')</script>
     <script>
       function autorun()
       {
