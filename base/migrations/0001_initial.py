@@ -8,41 +8,17 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Artist'
-        db.create_table('music_artist', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('music', ['Artist'])
-
-        # Adding model 'Song'
-        db.create_table('music_song', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('artist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['music.Artist'], null=True, blank=True)),
-            ('rating', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('source', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('fields', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('music', ['Song'])
-
         # Adding model 'UserProfile'
-        db.create_table('music_userprofile', (
+        db.create_table('base_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
         ))
-        db.send_create_signal('music', ['UserProfile'])
+        db.send_create_signal('base', ['UserProfile'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Artist'
-        db.delete_table('music_artist')
-
-        # Deleting model 'Song'
-        db.delete_table('music_song')
-
         # Deleting model 'UserProfile'
-        db.delete_table('music_userprofile')
+        db.delete_table('base_userprofile')
 
 
     models = {
@@ -75,32 +51,18 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
+        'base.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+        },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'music.artist': {
-            'Meta': {'object_name': 'Artist'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'music.song': {
-            'Meta': {'object_name': 'Song'},
-            'artist': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['music.Artist']", 'null': 'True', 'blank': 'True'}),
-            'fields': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'rating': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'source': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'})
-        },
-        'music.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
 
-    complete_apps = ['music']
+    complete_apps = ['base']
