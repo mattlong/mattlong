@@ -65,6 +65,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    #django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -74,8 +75,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
 
+    #thirdparty
     'south',
 
+    #mine
     'base',
     'blog',
     'music',

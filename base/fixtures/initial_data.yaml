@@ -1,0 +1,8 @@
+- model: auth.user
+  pk: 1
+  fields:
+    first_name: Matt
+    last_name: Long
+    username: matt
+    email: matt@crocodoc.com
+    password: pbkdf2_sha256$10000$Al6QyUEUYa6E$Ro1ChDFMkAYJXRMkUNIYewDDWVVCWlJnbbWfymyisfQ=
