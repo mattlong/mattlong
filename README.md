@@ -4,12 +4,8 @@ mattlong
 ### TODOs
 
 * blog
-  * blog admin
-  * blog viewing
-    * all posts
-      * homepage view
-      * tag based filtering
-    * overview
+  * generate url_title if url_title is None
+  * tag based filtering
 * projects page
   * links to github projects
   * developer tools

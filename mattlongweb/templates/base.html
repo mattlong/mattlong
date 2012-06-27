@@ -27,7 +27,7 @@
 
       #sidebar { width:170px; padding:20px 30px; position:fixed; top:0; bottom:0; border-right:2px solid #999; }
       #header { margin-left:232px; border-bottom:2px solid #999; }
-      #main { margin-left:232px; }
+      #main { margin:30px 30px 30px 262px; }
 
       /* sidebar components */
       #sigil { }
@@ -50,15 +50,16 @@
       #title { font-family:Georgia; margin:0; padding:40px 30px; color:#444; }
 
     </style>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <section id="sidebar">
-      <div id="sigil"><a href="index.html"><img src="https://secure.gravatar.com/avatar/6c33da7fe3a64d7483e9c7117c49edf5?s=120" width="120" height="120"/></a></div>
+      <div id="sigil"><a href="/"><img src="https://secure.gravatar.com/avatar/6c33da7fe3a64d7483e9c7117c49edf5?s=120" width="120" height="120"/></a></div>
 
       <h1 id="name"><a href="index.html">Matt Long</a></h1>
 
       <ul id="nav-links" class="round-buttons">
-        <li><a href="#">Posts</a></li>
+        <li><a href="/posts/all/">Posts</a></li>
         <li><a href="#">Projects</a></li>
         <!--li><a href="#">Tools</a></li-->
         <li><a href="#">Cellar</a></li>

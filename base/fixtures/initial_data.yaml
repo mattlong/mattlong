@@ -1,6 +1,8 @@
 - model: auth.user
   pk: 1
   fields:
+    is_staff: True
+    is_superuser: True
     first_name: Matt
     last_name: Long
     username: matt

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block head %}
+    <style type="text/css">
+    </style>
+{% endblock %}
+{% block main %}
+    {% for post in posts%}
+    <a href="/posts/{{post.url_title}}">{{post.published_date|date:"SHORT_DATE_FORMAT"}} - {{post.title}}</a><br/>
+    {% endfor %}
+{% endblock %}
