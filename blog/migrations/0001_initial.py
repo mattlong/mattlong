@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.create_table('blog_post', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('url_title', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('permalink', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('content', self.gf('django.db.models.fields.TextField')()),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -68,7 +68,7 @@ class Migration(SchemaMigration):
             'last_modified_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'published_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'url_title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'permalink': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
