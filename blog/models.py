@@ -16,6 +16,7 @@ class Post(models.Model):
     is_published = models.BooleanField(default=False)
 
     def generate_permalink(self):
+        #based on http://cubiq.org/the-perfect-php-clean-url-generator
         permalink = re.sub(r'[^a-zA-Z0-9\/_|+ -]', '', self.title)
         permalink = permalink.strip('-').lower()
         self.permalink = re.sub(r'[\/_|+ -]+', '-', permalink);
