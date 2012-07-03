@@ -19,9 +19,9 @@
     content: |
             The second one is a doozy
             On two lines?
-    created_date: !!timestamp '2012-06-29 20:52:20.165210+00:00'
-    last_modified_date: !!timestamp '2012-06-29 20:52:20.165247+00:00'
-    published_date: !!timestamp '2012-06-29 20:52:18+00:00'
+    created_date: !!timestamp '2012-06-30 20:52:20.165210+00:00'
+    last_modified_date: !!timestamp '2012-06-30 20:52:20.165247+00:00'
+    published_date: !!timestamp '2012-06-30 20:52:18+00:00'
     is_published: true
 
 - model: blog.post
@@ -31,7 +31,7 @@
     permalink: matts-third
     author: 1
     content: Tres
-    created_date: !!timestamp '2012-06-29 20:52:20.165210+00:00'
-    last_modified_date: !!timestamp '2012-06-29 20:52:20.165247+00:00'
-    published_date: !!timestamp '2012-06-29 20:52:18+00:00'
+    created_date: !!timestamp '2012-07-01 20:52:20.165210+00:00'
+    last_modified_date: !!timestamp '2012-07-01 20:52:20.165247+00:00'
+    published_date: !!timestamp '2012-07-01 20:52:18+00:00'
     is_published: true
