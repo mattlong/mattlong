@@ -4,10 +4,9 @@ mattlong
 ### TODOs
 
 * blog
-  * generate url_title if url_title is None
+  * Add markdown parsing
   * tag based filtering
 * projects page
-  * links to github projects
   * developer tools
 * bookmarks
   * bookmarklet

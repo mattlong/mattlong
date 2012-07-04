@@ -9,5 +9,8 @@ urlpatterns = patterns('django.views.generic.simple',
 
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^projects/$', 'direct_to_template', {'template': 'projects.html'},),
+
     url(r'^posts/', include('blog.urls')),
 )

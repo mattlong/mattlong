@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block headline %}Personal Projects{% endblock %}
+{% block head %}
+    <style type="text/css">
+    </style>
+{% endblock %}
+{% block main %}
+
+<h3>Web tools</h3>
+
+#TODO
+
+<h3>Other projects</h3>
+
+<h4><a href="https://github.com/mattlong/hermes" target="_blank">Hermes</a></h4>
+<p class="about">An XMPP-based group chat server.</p>
+
+<h4><a href="#" target="_blank">Django Cache Toolbox Modified</a></h4>
+<p class="about">Non-magical object caching for Django with some modifications to make it even more useful.</p>
+
+<h4><a href="https://github.com/mattlong/aws-billing" target="_blank">AWS Billing Calculator</a></h4>
+<p class="about">Scripts to calculate monthly Amazon AWS on a more granular level. e.g. per S3 bucket</p>
+
+<h4><a href="https://github.com/mattlong/celerywatch" target="_blank">Celery Watch</a></h4>
+<p class="about">Runs a celery app that monitors celeryd and stops it if it fails too many tasks.</p>
+
+<h4><a href="https://github.com/mattlong/charon" target="_blank">Charon</a></h4>
+<p class="about">Manage an HAProxy load-balancer programatically</p>
+
+{% endblock %}
