@@ -11,11 +11,11 @@ def recent(request, posts_to_show=5):
     posts = Post.objects.filter(is_published=True).order_by('-created_date')[:posts_to_show]
     return detail_posts(request, posts=posts)
 
-def single(request, url_title=None):
-    if not url_title: raise Http404()
+def single(request, permalink=None):
+    if not permalink: raise Http404()
 
     try:
-        post = Post.objects.get(url_title=url_title.lower())
+        post = Post.objects.get(permalink=permalink.lower())
     except:
         raise
 

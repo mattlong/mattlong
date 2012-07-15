@@ -8,7 +8,7 @@
 {% endblock %}
 {% block main %}
     {% for post in posts%}
-    <h3 class="post-title"><a href="/posts/{{post.url_title}}">{{post.title}}</a></h3>
+    <h3 class="post-title"><a href="/posts/{{post.permalink}}">{{post.title}}</a></h3>
     <div class="author">{{post.author.get_full_name}} - {{post.published_date}}</div>
     <div class="md">{{post.content|linebreaksbr}}</div>
     {% endfor %}

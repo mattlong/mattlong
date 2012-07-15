@@ -5,6 +5,6 @@
 {% endblock %}
 {% block main %}
     {% for post in posts%}
-    <a href="/posts/{{post.url_title}}">{{post.published_date|date:"SHORT_DATE_FORMAT"}} - {{post.title}}</a><br/>
+    <a href="/posts/{{post.permalink}}">{{post.published_date|date:"SHORT_DATE_FORMAT"}} - {{post.title}}</a><br/>
     {% endfor %}
 {% endblock %}
