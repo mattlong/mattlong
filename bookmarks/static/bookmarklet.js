@@ -1,0 +1,1 @@
+javascript:(function%20()%20%7Bvar%20s%20=%20document.createElement('script');s.setAttribute('src',%20'//static.mattlong.org:8000/static/main.js?r='+(new Date()).getTime());document.body.appendChild(s);%7D());

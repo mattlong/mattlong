@@ -13,4 +13,5 @@ urlpatterns = patterns('django.views.generic.simple',
     url(r'^projects/$', 'direct_to_template', {'template': 'projects.html'},),
 
     url(r'^posts/', include('blog.urls')),
+    url(r'^bookmarks/', include('bookmarks.urls')),
 )

@@ -1,0 +1,19 @@
+- model: bookmarks.bookmark
+  pk: 1
+  fields:
+    title: Google
+    url: http://www.google.com/
+    meta_url: null
+    status: NEW
+    created_date: !!timestamp '2012-07-15 20:52:20.165210+00:00'
+    last_modified_date: !!timestamp '2012-07-15 20:52:20.165210+00:00'
+
+- model: bookmarks.bookmark
+  pk: 2
+  fields:
+    title: Chameleon - UIKit for Mac development
+    url: http://chameleonproject.org/
+    meta_url: http://news.ycombinator.com/item?id=2355507
+    status: NEW
+    created_date: !!timestamp '2012-07-15 20:53:20.165210+00:00'
+    last_modified_date: !!timestamp '2012-07-15 20:53:20.165210+00:00'

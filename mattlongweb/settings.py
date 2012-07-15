@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'base',
     'blog',
     'music',
+    'bookmarks',
 )
 
 # A sample logging configuration. The only tangible logging

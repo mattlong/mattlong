@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block headline %}Reading List{% endblock %}
+{% block head %}
+    <style type="text/css">
+        .bookmark { color:#333; font-size:14px; }
+        .meta { color:#666; font-size:10px; text-decoration:none; }
+        .date { font-size:10px; }
+    </style>
+{% endblock %}
+{% block main %}
+    {% for bookmark in bookmarks%}
+    <a class="bookmark" href="{{bookmark.url}}">{{bookmark.title}}</a>
+    {% if bookmark.meta_url %}<a class="meta" href="{{bookmark.meta_url}}">Discussion</a>{% endif %}
+    <span class="date">({{bookmark.created_date|date:"SHORT_DATE_FORMAT"}})</span>
+    <br/>
+    {% endfor %}
+{% endblock %}
