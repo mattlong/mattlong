@@ -8,13 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'PostTag'
+        db.create_table('blog_posttag', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('text', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
+        ))
+        db.send_create_signal('blog', ['PostTag'])
+
         # Adding model 'Post'
         db.create_table('blog_post', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('permalink', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('permalink', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('content', self.gf('django.db.models.fields.TextField')()),
+            ('content', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('last_modified_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('published_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
@@ -22,10 +29,24 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('blog', ['Post'])
 
+        # Adding M2M table for field tags on 'Post'
+        db.create_table('blog_post_tags', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('post', models.ForeignKey(orm['blog.post'], null=False)),
+            ('posttag', models.ForeignKey(orm['blog.posttag'], null=False))
+        ))
+        db.create_unique('blog_post_tags', ['post_id', 'posttag_id'])
+
 
     def backwards(self, orm):
+        # Deleting model 'PostTag'
+        db.delete_table('blog_posttag')
+
         # Deleting model 'Post'
         db.delete_table('blog_post')
+
+        # Removing M2M table for field tags on 'Post'
+        db.delete_table('blog_post_tags')
 
 
     models = {
@@ -61,14 +82,20 @@ class Migration(SchemaMigration):
         'blog.post': {
             'Meta': {'object_name': 'Post'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'content': ('django.db.models.fields.TextField', [], {}),
+            'content': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_published': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_modified_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'permalink': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'published_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'permalink': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['blog.PostTag']", 'symmetrical': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'blog.posttag': {
+            'Meta': {'object_name': 'PostTag'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'text': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},

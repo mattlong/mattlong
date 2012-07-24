@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import pre_save
 
-class Post(models.Model):
+import toolbox
+
+class PostTag(toolbox.models.Tag): pass
+
+class Post(toolbox.models.TaggedItem, models.Model):
     title = models.CharField(max_length=100)
     permalink = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(User)
@@ -15,6 +19,9 @@ class Post(models.Model):
     published_date = models.DateTimeField(null=True,blank=True)
 
     is_published = models.BooleanField(default=False)
+
+    #TaggedItem mixin
+    tags = models.ManyToManyField(PostTag)
 
     def generate_permalink(self):
         #based on http://cubiq.org/the-perfect-php-clean-url-generator
