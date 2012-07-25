@@ -14,4 +14,5 @@ urlpatterns = patterns('django.views.generic.simple',
 
     url(r'^posts/', include('blog.urls')),
     url(r'^bookmarks/', include('bookmarks.urls')),
+    url(r'^music/', include('music.urls')),
 )

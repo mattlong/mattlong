@@ -81,12 +81,13 @@
       <h2 id="title">{% block headline %}Recent Activity{% endblock %}</h2>
     </section>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{STATIC_URL}}thirdparty/jquery-1.7.2.min.js"><\/script>')</script>
+
     <section id="main">
     {% block main %}{% endblock %}
     </section>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{STATIC_URL}}thirdparty/jquery-1.7.2.min.js"><\/script>')</script>
     <script>
       function autorun()
       {
@@ -95,7 +96,6 @@
       if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
       else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
       else window.onload = autorun;
-
 
       //Google analytics
       //var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

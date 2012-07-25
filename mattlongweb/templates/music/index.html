@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block headline %}Music{% endblock %}
+{% block head %}
+    <style type="text/css">
+    </style>
+{% endblock %}
+{% block main %}
+    <form id="SearchForm" method="GET" action="">
+        <input id="SearchQuery" type="text" name="query" value="" placeholder="Search"/>
+    </form>
+
+    <form id="AddForm" method="GET" action="">
+        <input id="AddText" type="text" name="addtext" value="" placeholder="Add New Song"/>
+    </form>
+    {% for song in songs%}
+    {% endfor %}
+    <script>
+        $('#SearchForm').on('submit', function(e) {
+            var query = $('#SearchQuery').val();
+
+            if (!(typeof(query) === 'string' && query.length > 0)) {
+                return false;
+            }
+
+            $.get(document.location.origin+'/music/find', {'q':query}, function(data, textStatus, jqXHR) {
+
+            }, 'json');
+
+            return false;
+        });
+
+        var lastAdd = {'artist':'', 'title':'', 'source':''};
+        $('#AddText').on('change keyup', function(e) {
+            var parsed = {'artist':'', 'title':'', 'source':''};
+
+            var text = $('#AddText').val();
+
+            var regAll = /^([^-]+)-(.+),\s+(.+)$/i
+            var matchAll = regAll.exec(text);
+
+            var regArtistTitle = /^([^-]+)-(.+)$/i
+            var matchArtistTitle = regArtistTitle.exec(text);
+
+            if (matchAll !== null) {
+                parsed['artist'] = matchAll[1];
+                parsed['title'] = matchAll[2];
+                parsed['source'] = matchAll[3];
+            } else if (matchArtistTitle !== null) {
+                parsed['artist'] = matchArtistTitle[1];
+                parsed['title'] = matchArtistTitle[2];
+            }
+
+            for (var key in parsed) {
+                parsed[key] = parsed[key].trim().replace(/,$/, '');
+            }
+            console.warn(parsed);
+
+        });
+        
+    </script>
+{% endblock %}
