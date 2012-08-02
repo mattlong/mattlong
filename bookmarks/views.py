@@ -5,6 +5,10 @@ from django.shortcuts import render, redirect
 
 from bookmarks.models import Bookmark
 
+def add_bookmarklet(request):
+    context = { 'server_host': request.META.get('HTTP_HOST') }
+    return render(request, 'bookmarks/setup.html', context)
+
 def all(request, status='NEW'):
     bookmarks = Bookmark.objects.filter(status='NEW').order_by('-created_date')
     return list_bookmarks(request, bookmarks=bookmarks)
@@ -20,22 +24,27 @@ def list_bookmarks(request, bookmarks=None):
     return render(request, 'bookmarks/list.html', context)
 
 def add_url(request):
-    callback = request.GET['callback']
+    callback = request.GET.get('callback')
     title = request.GET.get('title')
     url = request.GET.get('url')
+    tags = request.GET.get('tags', u'').split(',')
     metaurl = request.GET.get('metaurl', u'null').lower()
     metaurl = None if metaurl.lower() == u'null' else metaurl
+
+    if not callback or not url:
+        return HttpResponse('missing params', status=400)
 
     data = { 'status': 'ok' }
 
     try:
         bookmark = Bookmark.objects.get(url=url)
-        data['exists'] = True
-        return HttpResponse('%s(%s);' % (callback, json.dumps(data),))
     except Bookmark.DoesNotExist:
-        pass
+        bookmark = Bookmark(title=title, url=url, meta_url=metaurl)
 
-    bookmark = Bookmark(title=title, url=url, meta_url=metaurl)
+    for tag in tags:
+        if tag:
+            bookmark.tags.get_or_create(text=tag)
+
     bookmark.save()
 
-    return HttpResponse('%s(%s);' % (callback,json.dumps(data),));
+    return HttpResponse('%s(%s);' % (callback,json.dumps(data),), content_type='application/javascript')

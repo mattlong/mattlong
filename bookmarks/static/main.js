@@ -16,12 +16,36 @@
         url = $('td.title a').attr('href');
     }
 
-    $.ajax({
-          url: "//mattlong.org:8000/bookmarks/add",
-          data: {title:title, url:url, metaurl:metaurl},
-          success: onBookmarkAdd,
-          dataType: "jsonp"
-    });
+    var style = 'font-size:16px;font-family:verdana;color:black;font-weight:bold;position:fixed;top:20px;left:20px;margin:0;padding:10px;background-color:lightGreen;border:3px solid #333';
+    var inputStyle = 'font-size:16px;font-family:verdana;padding:1px;';
+    var html = '<div style="'+style+'">tags: <input style="'+inputStyle+'" class="ml-tag-input" type="text" /></div>';
+
+    var addBookmarkTimeout = setTimeout(function(){addBookmark();},5000);
+
+    var jBox = $(html).appendTo('body').find('.ml-tag-input').focus().on('keyup change', function(e) {
+        clearTimeout(addBookmarkTimeout);
+        if (e.keyCode === 13) {
+            var tags = $(this).val();
+            addBookmark(tags);
+        }
+    }).end();
+
+    var addBookmarkCalled = false;
+    function addBookmark(tags) {
+        if (addBookmarkCalled) { /*return;*/ }
+
+        addBookmarkCalled = true;
+        var data = {'title':title, 'url':url, 'metaurl':metaurl};
+        if (tags) { data['tags'] = tags; }
+
+        $.ajax({
+              url: "//"+window.mlong_host+"/bookmarks/add",
+              data: data,
+              success: onBookmarkAdd,
+              dataType: "jsonp"
+        });
+        jBox.html('calculating...');
+    }
 
     function onBookmarkAdd(data, textStatus, jqXHR) {
         var message, color;
@@ -33,11 +57,8 @@
             color = '#a00';
         }
 
-        var style = 'color:black;font-weight:bold;position:fixed;top:20px;left:20px;margin:0;padding:10px;background-color:'+color+';border:3px solid #333';
-        var html = '<div style="'+style+'">'+message+'</div>';
+        jBox.html(message).css({'background-color':color}).fadeOut(4000, function() {
 
-        $(html).appendTo('body').fadeOut(4000, function() {
-            console.warn("YO");
         });
     }
 });
