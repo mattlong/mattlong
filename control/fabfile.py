@@ -10,10 +10,14 @@ env.key_filename = os.environ.get('MATTLONG_KEY')
 
 env.settings = 'production'
 env.path = os.environ.get('MATTLONG_PATH')
+env.static_path = os.environ.get('MATTLONG_STATIC_PATH')
+env.vassal_dir = os.environ.get('UWSGI_VASSAL_DIR')
 env.release = 'latest'
 
 def setup():
     run('mkdir -p %(path)s' % env)
+    if env.static_path:
+        run('mkdir -p %(static_path)s' % env)
     with cd(env.path):
         run('virtualenv --no-site-packages .')
         run('git clone git://github.com/mattlong/mattlong.git mattlong')
@@ -25,7 +29,9 @@ def deploy():
             run('git fetch origin')
             run('git reset --hard origin/master')
             sha1 = run('git rev-parse HEAD').stdout
+            if env.static_path:
+                run('python manage.py collectstatic --noinput')
         run('echo "%s" >> releases' % (sha1,))
         run('./bin/pip install -r mattlong/requirements.txt')
         #TODO: copy in correct settings/local.py
-        #TODO: restart uwsgi
+        sudo('cp mattlong/mattlongweb/mattlong.ini %s/' % (env.vassal_dir,))

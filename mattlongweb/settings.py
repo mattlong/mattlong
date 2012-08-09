@@ -2,7 +2,7 @@ import os
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-DEBUG = True
+DEBUG = PROJECT_DIR.find('www') == -1
 TEMPLATE_DEBUG = DEBUG
 
 MANAGERS = ADMINS = (('Matt Long', 'matt@mattlong.org'),)
