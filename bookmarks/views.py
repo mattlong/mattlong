@@ -1,7 +1,10 @@
 import json
 
+from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
+
+from toolbox import JsonResponse
 
 from bookmarks.models import Bookmark
 
@@ -16,12 +19,25 @@ def all(request, status='NEW'):
 def list_bookmarks(request, bookmarks=None):
     if not bookmarks: raise Http404()
 
-    for b in bookmarks:
-        print b.url, type(b.meta_url), b.meta_url
+    #for b in bookmarks:
+    #    print b.url, type(b.meta_url), b.meta_url
 
     context = {}
     context['bookmarks'] = bookmarks
     return render(request, 'bookmarks/list.html', context)
+
+def find(request):
+    query = request.GET.get('q', '')
+
+    if not query:
+        bookmarks = Bookmark.objects.filter(status='NEW').order_by('-created_date')
+    else:
+        title_q = Q(title__contains=query)
+        url_q = Q(url__contains=query)
+        tag_q = Q(tags__text=query)
+        bookmarks = Bookmark.objects.filter(title_q | url_q | tag_q).order_by('-created_date')
+
+    return JsonResponse(bookmarks)
 
 def add_url(request):
     callback = request.GET.get('callback')
@@ -40,11 +56,11 @@ def add_url(request):
         bookmark = Bookmark.objects.get(url=url)
     except Bookmark.DoesNotExist:
         bookmark = Bookmark(title=title, url=url, meta_url=metaurl)
+        bookmark.save()
 
     for tag in tags:
         if tag:
             bookmark.tags.get_or_create(text=tag)
 
     bookmark.save()
-
     return HttpResponse('%s(%s);' % (callback,json.dumps(data),), content_type='application/javascript')

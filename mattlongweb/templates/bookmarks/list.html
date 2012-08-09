@@ -2,16 +2,48 @@
 {% block headline %}Bookmarks{% endblock %}
 {% block head %}
     <style type="text/css">
+        #SearchForm { margin-bottom:25px; }
         .bookmark { color:#333; font-size:14px; }
         .meta { color:#666; font-size:10px; text-decoration:none; }
         .date { font-size:10px; }
     </style>
 {% endblock %}
 {% block main %}
-    {% for bookmark in bookmarks%}
-    <a class="bookmark" href="{{bookmark.url}}">{{bookmark.title}}</a>
-    {% if bookmark.meta_url %}<a class="meta" href="{{bookmark.meta_url}}">Discussion</a>{% endif %}
-    <span class="date">({{bookmark.created_date|date:"SHORT_DATE_FORMAT"}})</span>
-    <br/>
-    {% endfor %}
+    <form id="SearchForm" method="GET" action="">
+        <input id="SearchQuery" type="text" name="SearchQuery" value="" placeholder="Filter"/>
+    </form>
+
+    <div id="Bookmarks">
+        {% for bookmark in bookmarks%}
+        <a class="bookmark" href="{{bookmark.url}}">{{bookmark.title}}</a>
+        {% if bookmark.meta_url %}<a class="meta" href="{{bookmark.meta_url}}">Discussion</a>{% endif %}
+        <span class="date">({{bookmark.created_date|date:"SHORT_DATE_FORMAT"}})</span>
+        <br/>
+        {% endfor %}
+    </div>
+    <script>
+
+        function updateList(bookmarks) {
+            var html = [];
+            $.each(bookmarks, function(i, bookmark) {
+                html.push('<a class="bookmark" href="{0}">{1}</a>'.format(bookmark.fields.url, bookmark.fields.title));
+                if (bookmark.fields.meta_url) {
+                    html.push('<a class="meta" href="{0}">Discussion</a>'.format(bookmark.fields.meta_url));
+                }
+                html.push('<span class="date">({0})</span><br/>'.format((new Date(bookmark.fields.created_date)).toShortDate()));
+            });
+            html = html.join('\n');
+            $('#Bookmarks').html(html);
+        }
+
+        $('#SearchForm').on('submit', function(e) {
+            var query = $('#SearchQuery').val();
+
+            $.get(document.location.origin+'/bookmarks/find', {'q':query}, function(data, textStatus, jqXHR) {
+                updateList(data);
+            }, 'json');
+
+            return false;
+        });
+    </script>
 {% endblock %}

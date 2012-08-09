@@ -18,7 +18,7 @@
         $('#SearchForm').on('submit', function(e) {
             var query = $('#SearchQuery').val();
 
-            if (!(typeof(query) === 'string' && query.length > 0)) {
+            if (!query.length > 0) {
                 return false;
             }
 
@@ -48,13 +48,14 @@
             } else if (matchArtistTitle !== null) {
                 parsed['artist'] = matchArtistTitle[1];
                 parsed['title'] = matchArtistTitle[2];
+            } else {
+                return;
             }
 
             for (var key in parsed) {
                 parsed[key] = parsed[key].trim().replace(/,$/, '');
             }
-            console.warn(parsed);
-
+            console.warn(parsed['artist'], parsed['title'], parsed['source']);
         });
         
     </script>
