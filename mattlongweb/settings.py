@@ -27,8 +27,12 @@ USE_TZ = True
 
 MEDIA_ROOT = ''
 MEDIA_URL = ''
-STATIC_ROOT = ''
-STATIC_URL = '/static/'
+if DEBUG:
+    STATIC_ROOT = ''
+    STATIC_URL = '/static/'
+else:
+    STATIC_ROOT = '/home/ubuntu/www/mattlong-static'
+    STATIC_URL = '//static.mattlong.org'
 STATICFILES_DIRS = ()
 
 STATICFILES_FINDERS = (

@@ -16,11 +16,15 @@ env.release = 'latest'
 
 def setup():
     run('mkdir -p %(path)s' % env)
+    sudo('rm -rf %(path)s/*' % env)
+
     if env.static_path:
         run('mkdir -p %(static_path)s' % env)
     with cd(env.path):
         run('virtualenv --no-site-packages .')
         run('git clone git://github.com/mattlong/mattlong.git mattlong')
+        run('./bin/pip install -r mattlong/requirements.txt')
+        run('ln -s ~/.mattlong/defaultdb mattlong/mattlongweb/')
 
 def deploy():
     with cd(env.path):
