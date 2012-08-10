@@ -18,11 +18,11 @@ DATABASES = {
     },
 }
 
-TIME_ZONE = None #'America/Los_Angeles'
+TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
-USE_L10N = True
+USE_L10N = False
 USE_TZ = True
 
 MEDIA_ROOT = ''
@@ -38,7 +38,6 @@ STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 SECRET_KEY = '2d*1aum8)r9gcyd*m)vm=-)b#4!#2&amp;g!#@=o6#k+h2uqy$1*6o'
@@ -46,7 +45,6 @@ SECRET_KEY = '2d*1aum8)r9gcyd*m)vm=-)b#4!#2&amp;g!#@=o6#k+h2uqy$1*6o'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,6 +103,9 @@ LOGGING = {
         }
     },
     'handlers': {
+        'stdout': {
+            'class': 'logging.StreamHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -112,6 +113,10 @@ LOGGING = {
         }
     },
     'loggers': {
+        '': {
+            'handlers': ['stdout'],
+            'level': 'ERROR',
+        },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',

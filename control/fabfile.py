@@ -17,9 +17,8 @@ env.release = 'latest'
 def setup():
     run('mkdir -p %(path)s' % env)
     sudo('rm -rf %(path)s/*' % env)
+    run('mkdir -p %(static_path)s' % env)
 
-    if env.static_path:
-        run('mkdir -p %(static_path)s' % env)
     with cd(env.path):
         run('virtualenv --no-site-packages .')
         run('git clone git://github.com/mattlong/mattlong.git mattlong')
@@ -33,8 +32,8 @@ def deploy():
             run('git fetch origin')
             run('git reset --hard origin/master')
             sha1 = run('git rev-parse HEAD').stdout
-            if env.static_path:
-                run('python manage.py collectstatic --noinput')
+            run('python manage.py collectstatic --noinput')
+
         run('echo "%s" >> releases' % (sha1,))
         run('./bin/pip install -r mattlong/requirements.txt')
         #TODO: copy in correct settings/local.py
