@@ -14,6 +14,8 @@
     </form>
     {% for song in songs%}
     {% endfor %}
+{% endblock %}
+{% block javascript %}
     <script>
         $('#SearchForm').on('submit', function(e) {
             var query = $('#SearchQuery').val();

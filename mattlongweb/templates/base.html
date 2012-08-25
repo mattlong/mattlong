@@ -1,6 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>{% block title %}Matt Long : Rebel Scum{% endblock %}</title>
 
@@ -10,75 +10,66 @@
     <!--link rel="shortcut icon" href="/static/favicon.ico" type="image/vnd.microsoft.icon"-->
 
     <!--link rel='stylesheet' href='//fonts.googleapis.com/css?family=FONT1|FONT2ETC' type='text/css'-->
-    <link rel="stylesheet" href="{{STATIC_URL}}normalize.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/normalize.css">
     <style type="text/css">
-      /*
-      Retrieved 2012-05-29 from http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css
-      YUI 3.5.1 (build 22)
-      Copyright 2012 Yahoo! Inc. All rights reserved.
-      Licensed under the BSD License.
-      http://yuilibrary.com/license/
-      */
-      /*html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}*/
+        html { font-family:Georgia; }
+        footer, header, section { display: block; }
+        a:hover,a:active { outline:0; }
 
-      html { font-family:Verdana,sans-serif; }
-      footer, header, section { display: block; }
-      a:hover,a:active { outline:0; }
+        body { margin:0 auto; width:960px; color:#333; }
 
-      #sidebar { width:170px; padding:20px 30px; position:fixed; top:0; bottom:0; border-right:2px solid #999; min-height:575px; }
-      #header { margin-left:232px; border-bottom:2px solid #999; }
-      #main { margin:30px 30px 30px 262px; }
+        #header { overflow:hidden; margin:20px 0 0 0; padding:0 0 20px 0; border-bottom:1px solid #ddd; /*DEBUG background-color:lightblue; DEBUGEND*/ }
+        #maintitle { margin:0 0 5px 0; font-size:64px; text-align:center; letter-spacing:0.1em; /*DEBUG background-color:lightgreen; DEBUGEND*/}
+        #tagline { text-align:center; font-size:14px; }
+        #navigation { margin-top:30px; }
 
-      /* sidebar components */
-      #sigil { text-align:center; }
+        #title { margin:20px 0 20px 30px; }
+        #title h2 { margin:0; font-size:28px; }
 
-      #name { margin-top:10px; font-family:Georgia; text-align:center; }
-      #name a { color:#000; text-decoration:none; }
-      #name a:active, #name a:visited { color:#000; }
-      #name a:hover { color:green; }
+        #main { margin:30px; }
 
-      .round-buttons { list-style:none; margin:0 auto; padding:0; }
-      .round-buttons li { padding:6px 0 15px 0; } /* display:block; clear:both; float:none; */
-      .round-buttons a { border:2px solid #ccc; border-radius:40px; padding:4px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
-      .round-buttons a:hover { border-color:green; background-color:green; color:white; }
+        #maintitle a { text-decoration:none; }
+        #maintitle a, #maintitle a:active, #maintitle a:visited { color:#444; }
+        #maintitle a:hover { color:green; }
 
-      #me-links { position:absolute; bottom:20px; }
-      #me-links li { padding:0 0 10px 0; }
-      #me-links a { border:0px solid #aaa; padding:5px 10px 5px 12px; }
+        .horizontal-nav { position:relative; float:left;  left:50%; margin:0; list-style-type:none; text-align:center; padding:0; }
+        .horizontal-nav li { display:block; position:relative; float:left; right:50%; margin:0; border-style:solid; border-color:#666; padding:0 10px; font-size:18px; border-width: 0 1px 0 0; }
+        .horizontal-nav li:last-child { border-width: 0; }
+        .horizontal-nav a, .horizontal-nav a:hover, .horizontal-nav a:visited { color: #333; }
 
-      /* header components */
-      #title { font-family:Georgia; margin:0; padding:40px 30px; color:#444; }
+        /*.round-buttons { list-style:none; margin:0 auto; padding:0; }
+        .round-buttons li { padding:6px 0 15px 0; }
+        .round-buttons a { border:2px solid #ccc; border-radius:40px; padding:4px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
+        .round-buttons a:hover { border-color:green; background-color:green; color:white; }
+
+        #me-links { position:absolute; bottom:20px; }
+        #me-links li { padding:0 0 10px 0; }
+        #me-links a { border:0px solid #aaa; padding:5px 10px 5px 12px; }*/
 
     </style>
     {% block head %}{% endblock %}
-  </head>
-  <body>
-    <section id="sidebar">
-      <div id="sigil"><a href="/"><img src="https://secure.gravatar.com/avatar/6c33da7fe3a64d7483e9c7117c49edf5?s=120" width="120" height="120"/></a></div>
-
-      <h1 id="name"><a href="/">Matt Long</a></h1>
-
-      <ul id="nav-links" class="round-buttons">
-        <li><a href="/posts/all/">Posts</a></li>
-        <li><a href="/projects/">Projects</a></li>
-        <!--li><a href="#">Tools</a></li-->
-        <li><a href="#">Cellar</a></li>
-        <li><a href="/music/">Music</a></li>
-        <li><a href="/bookmarks/">Bookmarks</a></li>
-        <!--li><a href="#">Nostalgia</a></li-->
-        <li><a href="#">Brother</a></li>
-        <li><a target="_blank" href="https://crocodoc.com">Crocodoc</a></li>
-      </ul>
-
-      <ul id="me-links" class="round-buttons">
-        <li><a target="_blank" href="https://github.com/mattlong">Github</a></li>
-        <li><a target="_blank" href="http://twitter.com/#!/mateolargo">Twitter</a></li>
-        <li><a href="mailto:example@test.com">Say Hello</a></li>
-      </ul>
+</head>
+<body>
+    <section id="header">
+        <!--div id="sigil"><a href="/"><img src="https://secure.gravatar.com/avatar/6c33da7fe3a64d7483e9c7117c49edf5?s=120" width="120" height="120"/></a></div-->
+        <h1 id="maintitle"><a href="/">Matt Long</a></h1>
+        <div id="tagline">Knowledge speaks, wisdom listens.</div>
+        <ul id="navigation" class="horizontal-nav">
+            <li><a href="/posts/all/">Posts</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/bookmarks/">Bookmarks</a></li>
+            <li><a href="/music/">Music</a></li>
+            <li><a href="#">Cellar</a></li>
+            <li><a target="_blank" href="https://github.com/mattlong">Github</a></li>
+        </ul>
     </section>
 
-    <section id="header">
-      <h2 id="title">{% block headline %}Recent Activity{% endblock %}</h2>
+    <section id="title">
+        <h2>{% block headline %}Recent Activity{% endblock %}</h2>
+    </section>
+
+    <section id="main">
+    {% block main %}{% endblock %}
     </section>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -109,10 +100,7 @@
             return '{0}/{1}/{2}'.format(m,d,y);
         }
     </script>
-
-    <section id="main">
-    {% block main %}{% endblock %}
-    </section>
+    {% block javascript %}{% endblock %}
 
     <script>
       function autorun()
