@@ -2,7 +2,7 @@
   pk: 1
   fields:
     title: Hello World
-    permalink: hello-world
+    slug: hello-world
     author: 1
     content: This is my first post!
     created_date: !!timestamp '2012-06-29 20:52:20.165210+00:00'
@@ -14,7 +14,7 @@
   pk: 2
   fields:
     title: Second Post
-    permalink: second-post
+    slug: second-post
     author: 1
     content: |
             The second one is a doozy
@@ -28,7 +28,7 @@
   pk: 3
   fields:
     title: Matt's Third
-    permalink: matts-third
+    slug: matts-third
     author: 1
     content: Tres
     created_date: !!timestamp '2012-07-01 20:52:20.165210+00:00'

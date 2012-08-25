@@ -4,7 +4,7 @@
     </style>
 {% endblock %}
 {% block main %}
-    {% for post in posts%}
-    <a href="/posts/{{post.permalink}}">{{post.published_date|date:"SHORT_DATE_FORMAT"}} - {{post.title}}</a><br/>
+    {% for post in object_list%}
+    <a href="/posts/{{post.slug}}">{{post.published_date|date:"SHORT_DATE_FORMAT"}} - {{post.title}}</a><br/>
     {% endfor %}
 {% endblock %}

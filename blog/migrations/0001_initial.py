@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
         db.create_table('blog_post', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('permalink', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
+            ('slug', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('content', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -87,8 +87,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_published': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_modified_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'permalink': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'published_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['blog.PostTag']", 'symmetrical': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },

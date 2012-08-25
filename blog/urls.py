@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, include, url
 
+from blog.views import PostDetailView, PostSummaryView, PostListView
+
 urlpatterns = patterns('blog.views',
-    url(r'^$', 'recent',),
-    url(r'^all/$', 'all',),
-    url(r'^(?P<permalink>[\w\-]+)', 'single',),
+    url(r'^$', PostListView.as_view()),
+    url(r'^all/$', PostSummaryView.as_view()),
+    url(r'^(?P<slug>[\w\-]+)/$', PostDetailView.as_view()),
 )

@@ -4,13 +4,17 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import pre_save
 
-import toolbox
+from toolbox.models import Tag, TaggedItem
 
-class PostTag(toolbox.models.Tag): pass
+class PostTag(Tag): pass
 
-class Post(toolbox.models.TaggedItem, models.Model):
+class Post(TaggedItem, models.Model):
+
+    class Meta(object):
+        ordering = ['-published_date']
+
     title = models.CharField(max_length=100)
-    permalink = models.CharField(max_length=100, blank=True)
+    slug = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(User)
     content = models.TextField(null=True, blank=True)
 
@@ -23,16 +27,16 @@ class Post(toolbox.models.TaggedItem, models.Model):
     #TaggedItem mixin
     tags = models.ManyToManyField(PostTag)
 
-    def generate_permalink(self):
+    def generate_slug(self):
         #based on http://cubiq.org/the-perfect-php-clean-url-generator
-        permalink = re.sub(r'[^a-zA-Z0-9\/_|+ -]', '', self.title)
-        permalink = permalink.strip('-').lower()
-        self.permalink = re.sub(r'[\/_|+ -]+', '-', permalink);
-        return self.permalink
+        slug = re.sub(r'[^a-zA-Z0-9\/_|+ -]', '', self.title)
+        slug = slug.strip('-').lower()
+        self.slug = re.sub(r'[\/_|+ -]+', '-', slug);
+        return self.slug
 
-def add_permalink(sender, instance, raw, using, **kwargs):
-    if raw: return
+def add_slug(sender, instance, raw, using, **kwargs):
+    if raw: return #True if the model is saved exactly as presented (i.e. when loading a fixture)
 
-    if not instance.permalink:
-        instance.generate_permalink()
-pre_save.connect(add_permalink, sender=Post)
+    if not instance.slug:
+        instance.generate_slug()
+pre_save.connect(add_slug, sender=Post)

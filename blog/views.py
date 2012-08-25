@@ -1,36 +1,28 @@
-from django.http import Http404
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
 from blog.models import Post
 
-def all(request):
-    posts = Post.objects.filter(is_published=True).order_by('-created_date')
-    return list_posts(request, posts=posts)
+class PostSummaryView(ListView):
+    model = Post
+    paginate_by = 20
 
-def recent(request, posts_to_show=5):
-    posts = Post.objects.filter(is_published=True).order_by('-created_date')[:posts_to_show]
-    return detail_posts(request, posts=posts)
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    paginate_by = 2
+    queryset = Post.objects.all()
 
-def single(request, permalink=None):
-    if not permalink: raise Http404()
+    def get_queryset(self):
+        queryset = self.queryset.filter(is_published=True)[:self.paginate_by]
+        return queryset
 
-    try:
-        post = Post.objects.get(permalink=permalink.lower())
-    except:
-        raise
+class PostDetailView(DetailView):
+    model = Post
 
-    return detail_posts(request, posts=(post,))
-
-def list_posts(request, posts=None):
-    if not posts: raise Http404()
-
-    context = {}
-    context['posts'] = posts
-    return render(request, 'blog/list.html', context)
-
-def detail_posts(request, posts=None):
-    if not posts: raise Http404()
-
-    context = {}
-    context['posts'] = posts
-    return render(request, 'blog/detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context['object_list'] = (self.object,)
+        return context

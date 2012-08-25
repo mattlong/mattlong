@@ -1,6 +1,13 @@
 mattlong
 ========
 
+### Working On
+
+Blog: Add markdown parsing
+
+### Up Next
+
+
 ### TODO
 
 * music
@@ -8,7 +15,6 @@ mattlong
   * bulk import songs from copy paste
 * bookmarks
 * blog
-  * Add markdown parsing
 * tags
   * hierarchy
 * projects
