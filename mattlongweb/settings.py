@@ -1,4 +1,4 @@
-import os
+import os, json
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -22,6 +22,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'HIDE_DJANGO_SQL': True,
     'ENABLE_STACKTRACES': False,
+    'INTERCEPT_REDIRECTS': False,
 }
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -96,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.markup',
 
     #thirdparty
     'south',
@@ -108,6 +110,12 @@ INSTALLED_APPS = (
     'music',
     'bookmarks',
 )
+
+OAUTH_EMAIL_MAP = json.loads(os.environ.get('OAUTH_EMAIL_MAP', '{}'))
+OAUTH_DEBUG_CODE = os.environ.get('OAUTH_DEBUG_CODE')
+OAUTH_DEBUG_ACCESS_TOKEN = os.environ.get('OAUTH_DEBUG_ACCESS_TOKEN')
+GOOGLE_API_CLIENT_ID = os.environ.get('GOOGLE_API_CLIENT_ID')
+GOOGLE_API_CLIENT_SECRET = os.environ.get('GOOGLE_API_CLIENT_SECRET')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
