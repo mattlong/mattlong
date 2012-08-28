@@ -25,7 +25,7 @@ class Post(TaggedItem, models.Model):
     is_published = models.BooleanField(default=False)
 
     #TaggedItem mixin
-    tags = models.ManyToManyField(PostTag)
+    tags = models.ManyToManyField(PostTag, blank=True)
 
     def generate_slug(self):
         #based on http://cubiq.org/the-perfect-php-clean-url-generator

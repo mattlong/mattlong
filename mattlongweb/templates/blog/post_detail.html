@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load markup %}
 {% block head %}
     <style type="text/css">
         h3.post-title { color:green; }
@@ -8,8 +9,8 @@
 {% endblock %}
 {% block main %}
     {% for post in object_list %}
-    <h3 class="post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h3>
+    <h2 class="post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
     <div class="author">{{post.author.get_full_name}} - {{post.published_date}}</div>
-    <div class="md">{{post.content|linebreaksbr}}</div>
+    <div class="md">{{post.content|markdown}}</div>
     {% endfor %}
 {% endblock %}

@@ -2,7 +2,7 @@ import json
 
 from django.db.models import Q
 from django.http import HttpResponse, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from toolbox import JsonResponse
 

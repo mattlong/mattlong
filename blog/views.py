@@ -1,5 +1,4 @@
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 

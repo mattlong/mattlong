@@ -17,8 +17,11 @@
     slug: second-post
     author: 1
     content: |
-            The second one is a doozy
-            On two lines?
+            ### Hooray, Markdown!
+
+            First paragraph.
+
+            <iframe width="640" height="360" src="http://www.youtube.com/embed/vEg4SEch27w?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
     created_date: !!timestamp '2012-06-30 20:52:20.165210+00:00'
     last_modified_date: !!timestamp '2012-06-30 20:52:20.165247+00:00'
     published_date: !!timestamp '2012-06-30 20:52:18+00:00'
