@@ -10,8 +10,6 @@ from oauth2client.client import OAuth2WebServerFlow, FlowExchangeError
 
 def make_flow(request):
     host = request.META.get('HTTP_HOST', 'mattlong.org')
-    print host
-    print request.META
     flow = OAuth2WebServerFlow(
             client_id=settings.GOOGLE_API_CLIENT_ID,
             client_secret=settings.GOOGLE_API_CLIENT_SECRET,

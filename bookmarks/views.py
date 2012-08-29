@@ -18,11 +18,6 @@ def all(request, status='NEW'):
     return list_bookmarks(request, bookmarks=bookmarks)
 
 def list_bookmarks(request, bookmarks=None):
-    if not bookmarks: raise Http404()
-
-    #for b in bookmarks:
-    #    print b.url, type(b.meta_url), b.meta_url
-
     context = {}
     context['bookmarks'] = bookmarks
     return render(request, 'bookmarks/list.html', context)
