@@ -6,35 +6,40 @@ from fabric.api import *
 
 env.hosts = ['127.0.0.1']
 env.user = 'ubuntu'
-env.key_filename = os.environ.get('MATTLONG_KEY')
+env.key_filename = os.environ['MATTLONG_KEY']
 
 env.settings = 'production'
-env.path = os.environ.get('MATTLONG_PATH')
-env.static_path = os.environ.get('MATTLONG_STATIC_PATH')
-env.vassal_dir = os.environ.get('UWSGI_VASSAL_DIR')
+env.path = os.environ['MATTLONG_PATH']
+env.static_path = os.environ['MATTLONG_ORG_STATIC_PATH']
+env.vassal_dir = os.environ['UWSGI_VASSAL_DIR']
 env.release = 'latest'
 
 def setup():
     run('mkdir -p %(path)s' % env)
     sudo('rm -rf %(path)s/*' % env)
     run('mkdir -p %(static_path)s' % env)
+    sudo('mkdir -p /etc/mattlong.org/')
+    sudo('chown ubuntu:ubuntu /etc/mattlong.org/')
 
     with cd(env.path):
         run('virtualenv --no-site-packages .')
-        run('git clone git://github.com/mattlong/mattlong.git mattlong')
-        run('./bin/pip install -r mattlong/requirements.txt')
-        run('ln -s ~/.mattlong/defaultdb mattlong/mattlongweb/')
+        #run('git clone git://github.com/mattlong/mattlong.git mattlong')
+        run('cp -r /home/ubuntu/repos/mattlong ./mattlong')
+        run('./bin/pip install -r ./mattlong/requirements.txt')
+        #run('ln -s ~/.mattlong/defaultdb mattlong/mattlongweb/')
 
 def deploy():
     with cd(env.path):
         sha1 = None
         with cd('mattlong'):
-            run('git fetch origin')
-            run('git reset --hard origin/master')
+            run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
+            run('find . -name "*.pyc" | xargs rm')
+            #run('git fetch origin')
+            #run('git reset --hard HEAD')
             sha1 = run('git rev-parse HEAD').stdout
             run('python manage.py collectstatic --noinput')
 
         run('echo "%s" >> releases' % (sha1,))
         run('./bin/pip install -r mattlong/requirements.txt')
-        #TODO: copy in correct settings/local.py
+        run('cat /etc/mattlong.org/uwsgi-envvars >> mattlong/mattlongweb/mattlong.ini')
         sudo('cp mattlong/mattlongweb/mattlong.ini %s/' % (env.vassal_dir,))
