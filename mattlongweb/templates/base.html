@@ -16,7 +16,9 @@
         footer, header, section { display: block; }
         a:hover,a:active { outline:0; }
 
-        body { margin:0 auto; width:960px; color:#333; }
+        body { position:relative; margin:0 auto; width:960px; color:#333; }
+
+        #user { position:absolute; top:0; right:0; font-size:12px; }
 
         #header { overflow:hidden; margin:20px 0 0 0; padding:0 0 20px 0; border-bottom:1px solid #ddd; /*DEBUG background-color:lightblue; DEBUGEND*/ }
         #maintitle { margin:0 0 5px 0; font-size:64px; text-align:center; letter-spacing:0.1em; /*DEBUG background-color:lightgreen; DEBUGEND*/}
@@ -26,7 +28,7 @@
         #title { margin:20px 0 20px 30px; }
         #title h2 { margin:0; font-size:28px; }
 
-        #main { margin:30px; }
+        #main { position:relative; margin:30px; }
 
         #maintitle a { text-decoration:none; }
         #maintitle a, #maintitle a:active, #maintitle a:visited { color:#444; }
@@ -50,6 +52,13 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+    <div id="user">
+    {% if user.is_authenticated %}
+        {{user.username}}
+    {% else %}
+        <a href="/login">login</a>
+    {% endif %}
+    </div>
     <section id="header">
         <!--div id="sigil"><a href="/"><img src="https://secure.gravatar.com/avatar/6c33da7fe3a64d7483e9c7117c49edf5?s=120" width="120" height="120"/></a></div-->
         <h1 id="maintitle"><a href="/">Matt Long</a></h1>

@@ -1,20 +1,14 @@
-mattlong
+mattlong.org
 ========
 
 ### Working On
 
-oauth2 autentication
+Make it production ready; mostly  development vs production settings, fabfile, etc
 
 ### Up Next
 
-require authentication for relevant things
+### TODO
 
-login page
-
-### Roadmap (i.e. TODO)
-
-* authentication
-  * require login for relevant things
 * music
   * search/add page
   * bulk import songs from copy paste
@@ -24,3 +18,5 @@ login page
   * hierarchy
 * projects
   * developer tools
+* cellar
+  * make it another collection instead of a spreadsheet

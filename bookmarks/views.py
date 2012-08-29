@@ -4,12 +4,13 @@ from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
-from toolbox import JsonResponse
+from toolbox import JsonResponse, require_superuser
 
 from bookmarks.models import Bookmark
 
-def add_bookmarklet(request):
-    context = { 'server_host': request.META.get('HTTP_HOST') }
+@require_superuser
+def setup_bookmarklet(request):
+    context = { 'server_host': request.META.get('HTTP_HOST', 'mattlong.org') }
     return render(request, 'bookmarks/setup.html', context)
 
 def all(request, status='NEW'):
@@ -39,6 +40,7 @@ def find(request):
 
     return JsonResponse(bookmarks)
 
+@require_superuser
 def add_url(request):
     callback = request.GET.get('callback')
     title = request.GET.get('title')
