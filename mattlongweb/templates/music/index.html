@@ -5,60 +5,120 @@
     </style>
 {% endblock %}
 {% block main %}
-    <form id="SearchForm" method="GET" action="">
+    <div id="MusicApp">
         <input id="SearchQuery" type="text" name="query" value="" placeholder="Search"/>
-    </form>
-
-    <form id="AddForm" method="GET" action="">
-        <input id="AddText" type="text" name="addtext" value="" placeholder="Add New Song"/>
-    </form>
-    {% for song in songs%}
-    {% endfor %}
+        <ul id="SongList">
+        </ul>
+    </div>
 {% endblock %}
 {% block javascript %}
-    <script>
-        $('#SearchForm').on('submit', function(e) {
-            var query = $('#SearchQuery').val();
+<script>
+(function(){
+    var Song = Backbone.Model.extend({
+        initialize: function() {
 
-            if (!query.length > 0) {
-                return false;
-            }
+        },
+        parse: function(info) {
+            var fields = info.fields;
+            return {
+                title: fields.name,
+                artist: fields.artist || null,
+                source: fields.source || null
+            };
+        }
+    });
 
-            $.get(document.location.origin+'/music/find', {'q':query}, function(data, textStatus, jqXHR) {
+    var SongList = Backbone.Collection.extend({
+        model: Song,
+        url: '/music/find'
+    });
 
-            }, 'json');
+    var songs = new SongList();
+    songs.on('all', function(eventName, arguments) {
+        //console.warn(eventName, arguments);
+    });
 
-            return false;
-        });
+    var SongView = Backbone.View.extend({
+        tagName: 'li',
+        className: 'song',
+        template: _.template('<span class="title"><%=title%></span> by <span class="artist"><%=artist%></span> found on <span class="source"><%=source%></span>'),
 
-        var lastAdd = {'artist':'', 'title':'', 'source':''};
-        $('#AddText').on('change keyup', function(e) {
-            var parsed = {'artist':'', 'title':'', 'source':''};
+        events: {
 
-            var text = $('#AddText').val();
+        },
+        initialize: function() {
 
-            var regAll = /^([^-]+)-(.+),\s+(.+)$/i
-            var matchAll = regAll.exec(text);
+        },
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
 
-            var regArtistTitle = /^([^-]+)-(.+)$/i
-            var matchArtistTitle = regArtistTitle.exec(text);
+    var AppView = Backbone.View.extend({
+        el: $('#MusicApp'),
+        events: {
+            'keypress #SearchQuery': 'searchSongs'
+        },
+        initialize: function() {
+            this.searchField = this.$('#SearchQuery');
+            this.results = this.$('#SongList');
 
-            if (matchAll !== null) {
-                parsed['artist'] = matchAll[1];
-                parsed['title'] = matchAll[2];
-                parsed['source'] = matchAll[3];
-            } else if (matchArtistTitle !== null) {
-                parsed['artist'] = matchArtistTitle[1];
-                parsed['title'] = matchArtistTitle[2];
-            } else {
-                return;
-            }
+            songs.bind('reset', this.updateSongs, this);
 
-            for (var key in parsed) {
-                parsed[key] = parsed[key].trim().replace(/,$/, '');
-            }
-            console.warn(parsed['artist'], parsed['title'], parsed['source']);
-        });
-        
-    </script>
+        },
+        render: function() {
+
+        },
+        searchSongs: function(e) {
+            if (e.keyCode != 13) { return; }
+
+            var query = this.searchField.val();
+            if (query.length == 0) { return; }
+
+            songs.fetch({data: {q: query}});
+        },
+        updateSongs: function() {
+            this.results.empty();
+            var html = songs.map(function(song, arguments) {
+                var view = new SongView({model:song}).render();
+                this.results.append(view.el);
+            }, this);
+        }
+    });
+
+    var App = new AppView();
+    songs.reset({{jsonsongs|safe}}, {parse:true});
+
+    /*var lastAdd = {'artist':'', 'title':'', 'source':''};
+    $('#AddText').on('change keyup', function(e) {
+        var parsed = {'artist':'', 'title':'', 'source':''};
+
+        var text = $('#AddText').val();
+
+        var regAll = /^([^-]+)-(.+),\s+(.+)$/i
+        var matchAll = regAll.exec(text);
+
+        var regArtistTitle = /^([^-]+)-(.+)$/i
+        var matchArtistTitle = regArtistTitle.exec(text);
+
+        if (matchAll !== null) {
+            parsed['artist'] = matchAll[1];
+            parsed['title'] = matchAll[2];
+            parsed['source'] = matchAll[3];
+        } else if (matchArtistTitle !== null) {
+            parsed['artist'] = matchArtistTitle[1];
+            parsed['title'] = matchArtistTitle[2];
+        } else {
+            return;
+        }
+
+        for (var key in parsed) {
+            parsed[key] = parsed[key].trim().replace(/,$/, '');
+        }
+        console.warn(parsed['artist'], parsed['title'], parsed['source']);
+    });*/
+
+}());
+</script>
 {% endblock %}

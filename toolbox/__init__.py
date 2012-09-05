@@ -1,7 +1,6 @@
 import json
 
 from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core.exceptions import PermissionDenied
 from django.db.models.query import QuerySet
 from django.http import HttpResponse

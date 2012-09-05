@@ -12,7 +12,7 @@ class Song(TaggedItem, models.Model):
     artist = models.ForeignKey(Artist,null=True,blank=True)
     rating = models.IntegerField(null=True,blank=True)
     source = models.CharField(max_length=30,null=True,blank=True)
-    fields = models.TextField() #json
+    fields = models.TextField(null=True,blank=True) #json
 
     #TaggedItem mixin
-    tags = models.ManyToManyField(SongTag)
+    tags = models.ManyToManyField(SongTag, blank=True)

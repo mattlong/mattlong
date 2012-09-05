@@ -3,13 +3,16 @@ mattlong.org
 
 ### Working On
 
+music: omnifield to search for or add new songs
+
 ### Up Next
+
+music: bulk import songs from copy paste
 
 ### TODO
 
+* database backup strategy
 * music
-  * search/add page
-  * bulk import songs from copy paste
 * bookmarks
 * blog
 * tags
