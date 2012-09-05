@@ -1,10 +1,10 @@
 from django.db import models
 
-import toolbox
+from toolbox.models import Tag, TaggedItem
 
-class BookmarkTag(toolbox.models.Tag): pass
+class BookmarkTag(Tag): pass
 
-class Bookmark(toolbox.models.TaggedItem, models.Model):
+class Bookmark(TaggedItem, models.Model):
     title = models.CharField(max_length=200)
     url = models.TextField(unique=True)
     meta_url = models.TextField(null=True, blank=True)

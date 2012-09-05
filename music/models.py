@@ -1,13 +1,13 @@
 from django.db import models
 
-import toolbox
+from toolbox.models import Tag, TaggedItem
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
 
-class SongTag(toolbox.models.Tag): pass
+class SongTag(Tag): pass
 
-class Song(toolbox.models.TaggedItem, models.Model):
+class Song(TaggedItem, models.Model):
     name = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist,null=True,blank=True)
     rating = models.IntegerField(null=True,blank=True)

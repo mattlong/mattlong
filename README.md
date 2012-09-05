@@ -3,8 +3,6 @@ mattlong.org
 
 ### Working On
 
-Make it production ready; mostly  development vs production settings, fabfile, etc
-
 ### Up Next
 
 ### TODO

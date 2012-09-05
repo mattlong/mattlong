@@ -29,17 +29,29 @@ def setup():
         #run('ln -s ~/.mattlong/defaultdb mattlong/mattlongweb/')
 
 def deploy():
+    DEVELOPMENT = True
+
     with cd(env.path):
         sha1 = None
+
         with cd('mattlong'):
-            run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
-            run('find . -name "*.pyc" | xargs rm')
-            #run('git fetch origin')
-            #run('git reset --hard HEAD')
-            sha1 = run('git rev-parse HEAD').stdout
+
+            #mainly while in development and changes are often
+            if DEVELOPMENT:
+                run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
+                run('find . -name "*.pyc" | xargs rm')
+                run('find . -name ".git" | xargs rm -rf')
+            else:
+                run('git fetch origin')
+                run('git reset --hard HEAD')
+                sha1 = run('git rev-parse HEAD').stdout
+
             run('python manage.py collectstatic --noinput')
 
-        run('echo "%s" >> releases' % (sha1,))
+        if not DEVELOPMENT and sha1:
+            run('echo "%s" >> releases' % (sha1,))
+
         run('./bin/pip install -r mattlong/requirements.txt')
         run('cat /etc/mattlong.org/uwsgi-envvars >> mattlong/mattlongweb/mattlong.ini')
+
         sudo('cp mattlong/mattlongweb/mattlong.ini %s/' % (env.vassal_dir,))

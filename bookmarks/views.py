@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 from toolbox import JsonResponse, require_superuser
 
-from bookmarks.models import Bookmark
+from bookmarks.models import Bookmark, BookmarkTag
 
 @require_superuser
 def setup_bookmarklet(request):
@@ -40,9 +40,9 @@ def add_url(request):
     callback = request.GET.get('callback')
     title = request.GET.get('title')
     url = request.GET.get('url')
-    tags = request.GET.get('tags', u'').split(',')
-    metaurl = request.GET.get('metaurl', u'null').lower()
-    metaurl = None if metaurl.lower() == u'null' else metaurl
+    tags = request.GET.get('tags', '').split(',')
+    metaurl = request.GET.get('metaurl', 'null').lower()
+    metaurl = None if metaurl.lower() == 'null' else metaurl
 
     if not callback or not url:
         return HttpResponse('missing params', status=400)
@@ -55,9 +55,10 @@ def add_url(request):
         bookmark = Bookmark(title=title, url=url, meta_url=metaurl)
         bookmark.save()
 
-    for tag in tags:
-        if tag:
-            bookmark.tags.get_or_create(text=tag)
-
+    for tag_text in tags:
+        if tag_text:
+            tag, created = BookmarkTag.objects.get_or_create(text=tag_text)
+            bookmark.tags.add(tag)
     bookmark.save()
+
     return HttpResponse('%s(%s);' % (callback,json.dumps(data),), content_type='application/javascript')
