@@ -2,16 +2,41 @@
 {% block headline %}Music{% endblock %}
 {% block head %}
     <style type="text/css">
+        #SearchForm { margin-bottom:20px; }
+        #AddSongForm { margin-bottom:20px; }
+        #AddSongForm label { display:none; }
     </style>
 {% endblock %}
 {% block main %}
     <div id="MusicApp">
-        <input id="SearchQuery" type="text" name="query" value="" placeholder="Search"/>
+        <div id="SearchForm">
+            <input id="SearchQuery" type="text" name="query" value="" placeholder="Find some beats" autofocus/>
+        </div>
+        <div id="AddSongForm" style="display:none">
+            <label for="add-artist">Artist</label>
+            <input id="AddSongArtist" class="deletable" type="text" name="add-artist" value="" placeholder="Artist" size="14"/>
+
+            <label for="add-title">Title</label>
+            <input id="AddSongTitle" class="deletable" type="text" name="add-title" value="" placeholder="Title" size="14"/>
+
+            <label for="add-source">Source</label>
+            <input id="AddSongSource" class="deletable" type="text" name="add-source" value="" placeholder="Source" size="10"/>
+
+            <button id="AddSongSubmit" type="submit">Add</button>
+        </div>
         <ul id="SongList">
         </ul>
     </div>
+
+    <!-- Templates -->
+    <script type="text/template" id="SongTemplate">
+        <span class="title"><%=title%></span> by
+        <span class="artist"><%=artist%></span> found on
+        <span class="source"><%=source%></span>
+    </script>
 {% endblock %}
 {% block javascript %}
+{% include "csrf-ajax.html" %}
 <script>
 (function(){
     var Song = Backbone.Model.extend({
@@ -30,7 +55,7 @@
 
     var SongList = Backbone.Collection.extend({
         model: Song,
-        url: '/music/find'
+        url: '/api/music'
     });
 
     var songs = new SongList();
@@ -41,14 +66,7 @@
     var SongView = Backbone.View.extend({
         tagName: 'li',
         className: 'song',
-        template: _.template('<span class="title"><%=title%></span> by <span class="artist"><%=artist%></span> found on <span class="source"><%=source%></span>'),
-
-        events: {
-
-        },
-        initialize: function() {
-
-        },
+        template: _.template($("#SongTemplate").html()),
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
@@ -56,68 +74,99 @@
     });
 
     var AppView = Backbone.View.extend({
+        lastQuery: null,
+
         el: $('#MusicApp'),
         events: {
-            'keypress #SearchQuery': 'searchSongs'
+            'keypress #SearchQuery': 'searchSongs',
+
+            'keypress #AddSongForm input[type="text"]': 'addSong',
+            'click #AddSongSubmit': 'addSong'
         },
         initialize: function() {
             this.searchField = this.$('#SearchQuery');
             this.results = this.$('#SongList');
+            this.addSongForm = this.$('#AddSongForm');
 
             songs.bind('reset', this.updateSongs, this);
 
         },
-        render: function() {
-
-        },
         searchSongs: function(e) {
-            if (e.keyCode != 13) { return; }
+            if (e.keyCode != 13) { return; } //enter?
 
             var query = this.searchField.val();
-            if (query.length == 0) { return; }
 
             songs.fetch({data: {q: query}});
+            this.lastQuery = query;
+        },
+        addSong: function(e) {
+            if (e.type == 'keypress' && e.keyCode != 13) { return; } //enter?
+            var attrs = {
+                title: this.addSongForm.find('#AddSongTitle').val(),
+                artist: this.addSongForm.find('#AddSongArtist').val(),
+                source: this.addSongForm.find('#AddSongSource').val()
+            };
+            var song = new Song(attrs);
+            console.warn(song.toJSON());
+            songs.add(song);
+            console.warn(song.toJSON());
+            song.save();
         },
         updateSongs: function() {
-            this.results.empty();
-            var html = songs.map(function(song, arguments) {
-                var view = new SongView({model:song}).render();
-                this.results.append(view.el);
-            }, this);
+            var parsed = this.parseQuery(this.lastQuery);
+            if (songs.length == 0 && parsed) {
+                this.results.hide();
+                this.addSongForm.show()
+                .find('#AddSongArtist').val(parsed['artist']).select().end()
+                .find('#AddSongTitle').val(parsed['title']).end()
+                .find('#AddSongSource').val(parsed['source']);
+            } else {
+                this.addSongForm.hide();
+                this.results.empty().show();
+                songs.map(function(song, arguments) {
+                    var view = new SongView({model:song}).render();
+                    this.results.append(view.el);
+                }, this);
+            }
+
+        },
+        parseQuery: function(query) {
+            var parsed = {'artist':'', 'title':'', 'source':''};
+            var regex, match;
+
+            if (!match) {
+                regex = /^([^-]+)-(.+),\s+(.+)$/i; //artist/title/source
+                match = regex.exec(query);
+                if (match) {
+                    parsed['artist'] = match[1];
+                    parsed['title'] = match[2];
+                    parsed['source'] = match[3];
+                }
+            }
+
+            if (!match) {
+                regex = /^([^-]+)-(.+)$/i; //artist/title
+                match = regex.exec(query);
+                if (match) {
+                    parsed['artist'] = match[1];
+                    parsed['title'] = match[2];
+                }
+            }
+
+            if (match) {
+                //clean up parsed values
+                for (var key in parsed) {
+                    parsed[key] = parsed[key].trim().replace(/,$/, '');
+                }
+                return parsed;
+            } else {
+                return null;
+            }
         }
     });
 
     var App = new AppView();
     songs.reset({{jsonsongs|safe}}, {parse:true});
-
-    /*var lastAdd = {'artist':'', 'title':'', 'source':''};
-    $('#AddText').on('change keyup', function(e) {
-        var parsed = {'artist':'', 'title':'', 'source':''};
-
-        var text = $('#AddText').val();
-
-        var regAll = /^([^-]+)-(.+),\s+(.+)$/i
-        var matchAll = regAll.exec(text);
-
-        var regArtistTitle = /^([^-]+)-(.+)$/i
-        var matchArtistTitle = regArtistTitle.exec(text);
-
-        if (matchAll !== null) {
-            parsed['artist'] = matchAll[1];
-            parsed['title'] = matchAll[2];
-            parsed['source'] = matchAll[3];
-        } else if (matchArtistTitle !== null) {
-            parsed['artist'] = matchArtistTitle[1];
-            parsed['title'] = matchArtistTitle[2];
-        } else {
-            return;
-        }
-
-        for (var key in parsed) {
-            parsed[key] = parsed[key].trim().replace(/,$/, '');
-        }
-        console.warn(parsed['artist'], parsed['title'], parsed['source']);
-    });*/
 
 }());
 </script>
