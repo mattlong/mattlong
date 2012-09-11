@@ -11,46 +11,9 @@
 
     <!--link rel='stylesheet' href='//fonts.googleapis.com/css?family=FONT1|FONT2ETC' type='text/css'-->
     <link rel="stylesheet" href="{{STATIC_URL}}css/normalize.css">
-    <style type="text/css">
-        html { font-family:Georgia; }
-        footer, header, section { display: block; }
-        a:hover,a:active { outline:0; }
-
-        body { position:relative; margin:0 auto; width:960px; color:#333; }
-
-        #user { position:absolute; top:0; right:0; font-size:12px; }
-
-        #header { overflow:hidden; margin:20px 0 0 0; padding:0 0 20px 0; border-bottom:1px solid #ddd; /*DEBUG background-color:lightblue; DEBUGEND*/ }
-        #maintitle { margin:0 0 5px 0; font-size:64px; text-align:center; letter-spacing:0.1em; /*DEBUG background-color:lightgreen; DEBUGEND*/}
-        #tagline { text-align:center; font-size:14px; }
-        #navigation { margin-top:30px; }
-
-        #title { margin:20px 0 20px 30px; }
-        #title h2 { margin:0; font-size:28px; }
-
-        #main { position:relative; margin:30px; }
-
-        #maintitle a { text-decoration:none; }
-        #maintitle a, #maintitle a:active, #maintitle a:visited { color:#444; }
-        #maintitle a:hover { color:green; }
-
-        #main a, #main a:active, #main a:visited { color:#444; }
-        #main a:hover { color:green; }
-
-        .horizontal-nav { position:relative; float:left;  left:50%; margin:0; list-style-type:none; text-align:center; padding:0; }
-        .horizontal-nav li { display:block; position:relative; float:left; right:50%; margin:0; border-style:solid; border-color:#666; padding:0 10px; font-size:18px; border-width: 0 1px 0 0; }
-        .horizontal-nav li:last-child { border-width: 0; }
-        .horizontal-nav a, .horizontal-nav a:hover, .horizontal-nav a:visited { color: #333; }
-
-        /*.round-buttons { list-style:none; margin:0 auto; padding:0; }
-        .round-buttons li { padding:6px 0 15px 0; }
-        .round-buttons a { border:2px solid #ccc; border-radius:40px; padding:4px 10px; color:#aaa; text-decoration:none; letter-spacing:1px; }
-        .round-buttons a:hover { border-color:green; background-color:green; color:white; }
-
-        #me-links { position:absolute; bottom:20px; }
-        #me-links li { padding:0 0 10px 0; }
-        #me-links a { border:0px solid #aaa; padding:5px 10px 5px 12px; }*/
-
+    <link rel="stylesheet" href="{{STATIC_URL}}css/style.css">
+    <style>
+        span.deleteicon span { background: url('{{STATIC_URL}}/img/input-x.png'); }
     </style>
     {% block head %}{% endblock %}
 </head>
@@ -119,6 +82,14 @@
     {% block javascript %}{% endblock %}
 
     <script>
+        $(function(e) {
+            /*$('input.deletable').wrap('<span class="deleteicon" />').after('<span/>');
+            $('body').on('keydown keyup change click', 'input.deletable[type="text"]', function(e) {
+                $(this).next('span').toggle(this.value != '');
+            }).on('click', 'span.deleteicon span', function(e) {
+                $(this).prev('input').val('').focus().end().hide();
+            });*/
+        });
       /*function autorun()
       {
 
