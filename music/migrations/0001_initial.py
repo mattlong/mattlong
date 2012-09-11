@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
             ('artist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['music.Artist'], null=True, blank=True)),
             ('rating', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('source', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('fields', self.gf('django.db.models.fields.TextField')()),
+            ('fields', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
         ))
         db.send_create_signal('music', ['Song'])
 
@@ -65,12 +65,12 @@ class Migration(SchemaMigration):
         'music.song': {
             'Meta': {'object_name': 'Song'},
             'artist': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['music.Artist']", 'null': 'True', 'blank': 'True'}),
-            'fields': ('django.db.models.fields.TextField', [], {}),
+            'fields': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'rating': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'source': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['music.SongTag']", 'symmetrical': 'False'})
+            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['music.SongTag']", 'symmetrical': 'False', 'blank': 'True'})
         },
         'music.songtag': {
             'Meta': {'object_name': 'SongTag'},
