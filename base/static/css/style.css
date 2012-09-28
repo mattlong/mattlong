@@ -5,10 +5,15 @@ a:hover,a:active { outline:0; }
 body { position:relative; margin:0 auto; width:960px; color:#333; }
 
 #user { position:absolute; top:0; right:0; font-size:12px; }
+#user span,
+#user a { margin-left:2px; }
 
 #header { overflow:hidden; margin:20px 0 0 0; padding:0 0 20px 0; border-bottom:1px solid #ddd; /*DEBUG background-color:lightblue; DEBUGEND*/ }
+
 #maintitle { margin:0 0 5px 0; font-size:64px; text-align:center; letter-spacing:0.1em; /*DEBUG background-color:lightgreen; DEBUGEND*/}
+
 #tagline { text-align:center; font-size:14px; }
+
 #navigation { margin-top:30px; }
 
 #title { margin:20px 0 20px 30px; }

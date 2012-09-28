@@ -2,7 +2,6 @@
 {% block headline %}Bookmarks{% endblock %}
 {% block head %}
     <style type="text/css">
-        #setup { position:absolute; top:0; right:0; font-size:80%; }
         #SearchForm { margin-bottom:25px; }
         .bookmark { color:#333; font-size:14px; }
         .meta { color:#666; font-size:10px; text-decoration:none; }
@@ -10,10 +9,6 @@
     </style>
 {% endblock %}
 {% block main %}
-    {% if user.is_authenticated %}
-    <div id="setup"><a href="/bookmarks/setup">Get bookmarklet</a></div>
-    {% endif %}
-
     <form id="SearchForm" method="GET" action="">
         <input id="SearchQuery" type="text" name="SearchQuery" value="" placeholder="Filter"/>
     </form>

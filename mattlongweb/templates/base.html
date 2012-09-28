@@ -20,7 +20,9 @@
 <body>
     <div id="user">
     {% if user.is_authenticated %}
-        {{user.username}}
+        <a href="/posts/new">New Post</a>
+        <a href="/bookmarks/setup">Get bookmarklet</a>
+        <span>{{user.username}}</span>
     {% else %}
         <a href="/login">login</a>
     {% endif %}
@@ -30,7 +32,7 @@
         <h1 id="maintitle"><a href="/">Matt Long</a></h1>
         <div id="tagline">Knowledge speaks, wisdom listens.</div>
         <ul id="navigation" class="horizontal-nav">
-            <li><a href="/posts/all/">Posts</a></li>
+            <li><a href="/">Blog</a></li>
             <li><a href="/projects/">Projects</a></li>
             <li><a href="/bookmarks/">Bookmarks</a></li>
             <li><a href="/music/">Music</a></li>
