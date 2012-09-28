@@ -7,5 +7,5 @@
 {% endblock %}
 {% block main %}
 
-Drag this to your bookmarks: <a id="bookmarklet" href="javascript:(function(){window.mlong_host='{{server_host}}';var s=document.createElement('script');s.setAttribute('src','//{{server_host}}/static/main.js?r='+(new Date()).getTime());document.body.appendChild(s);}());">BM</a>
+Drag this to your bookmarks: <a id="bookmarklet" href="javascript:(function(){window.mlong_host='{{server_host}}';var s=document.createElement('script');s.setAttribute('src','{{STATIC_URL}}main.js?r='+(new Date()).getTime());document.body.appendChild(s);}());">BM</a>
 {% endblock %}

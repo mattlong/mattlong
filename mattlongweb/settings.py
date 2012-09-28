@@ -131,7 +131,7 @@ LOGGING = {
 if IS_PRODUCTION:
     SECRET_KEY = os.environ['MATTLONG_ORG_SECRET_KEY']
     STATIC_ROOT = os.environ['MATTLONG_ORG_STATIC_PATH']
-    STATIC_URL = '//static.mattlong.org'
+    STATIC_URL = '//static.mattlong.org/'
     DATABASES['default']['NAME'] = '/etc/mattlong.org/defaultdb'
 
 if DEBUG:

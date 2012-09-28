@@ -28,27 +28,35 @@ def setup():
         run('./bin/pip install -r ./mattlong/requirements.txt')
         #run('ln -s ~/.mattlong/defaultdb mattlong/mattlongweb/')
 
-def deploy():
-    DEVELOPMENT = True
+def deploy(use_git='false'):
+    use_git = use_git.lower() == 'true'
+
+    env_var_str = 'export'
+    env_vars = {}
+    for key, value in os.environ.items():
+        if key.find('MATTLONG') == 0:
+            env_var_str += ' %s=\'%s\'' % (key,value)
+            env_vars['key'] = value
 
     with cd(env.path):
         sha1 = None
 
         with cd('mattlong'):
 
-            #mainly while in development and changes are often
-            if DEVELOPMENT:
-                run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
-                run('find . -name "*.pyc" | xargs rm')
-                run('find . -name ".git" | xargs rm -rf')
-            else:
+            if use_git:
                 run('git fetch origin')
                 run('git reset --hard HEAD')
                 sha1 = run('git rev-parse HEAD').stdout
+            else:
+                run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
+                run('find . -name "*.pyc" | xargs rm')
+                run('find . -name ".git" | xargs rm -rf')
 
-            run('python manage.py collectstatic --noinput')
 
-        if not DEVELOPMENT and sha1:
+            with prefix(env_var_str):
+                run('python manage.py collectstatic --noinput')
+
+        if use_git and sha1:
             run('echo "%s" >> releases' % (sha1,))
 
         run('./bin/pip install -r mattlong/requirements.txt')
