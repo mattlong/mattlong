@@ -2,15 +2,24 @@
 {% load markup %}
 {% block head %}
     <style type="text/css">
-        h3.post-title { color:green; }
-        .author { font-size:13px; }
+        .post { border-bottom: 1px solid #ddd; }
+        .post-title a:first-child { text-decoration:none; }
+        .post .action { font-size:13px; }
+        .date { text-decoration:none; font-size:14px; }
         .md { margin:15px 0 50px;}
     </style>
 {% endblock %}
 {% block main %}
     {% for post in object_list %}
-    <h2 class="post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
-    <div class="author">{{post.author.get_full_name}} - {{post.published_date}}</div>
-    <div class="md">{{post.content|markdown}}</div>
+    <div class="post">
+        <h2 class="post-title">
+            <a href="/posts/{{post.slug}}">{{post.title}}</a>
+            {% if user.is_authenticated %}
+            <a class="action" href="/posts/{{post.slug}}/edit">edit</a>
+            {% endif %}
+        </h2>
+        <a class="date" href="/posts/{{post.slug}}">{{post.published_date|date:"F j, Y"}}</a>
+        <div class="md">{{post.content|markdown}}</div>
+    </div>
     {% endfor %}
 {% endblock %}

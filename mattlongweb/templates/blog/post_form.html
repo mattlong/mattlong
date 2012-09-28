@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block head %}
+<style type="text/css">
+    form ul { list-style:none; margin:0; padding:0; }
+    form li { margin: 0 0 10px; 0; }
+</style>
+{% endblock %}
+{% block main %}
+<form method="post" action="">
+    {% csrf_token %}
+    <ul>
+    {{form.as_ul}}
+    </ul>
+    <input type="submit" value="Submit Form"/>
+</form>
+{% endblock %}
+{% block javascript %}
+{% endblock %}
