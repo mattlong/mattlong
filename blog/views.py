@@ -3,6 +3,8 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
+from toolbox import require_superuser
+
 from blog.models import Post
 
 class PostSummaryView(ListView):
@@ -43,6 +45,7 @@ class PostUpdateView(UpdateView):
     model = Post
     success_url="/posts/%(slug)s/"
 
+@require_superuser
 def edit_post(request, slug=None):
     initial = {}
 
