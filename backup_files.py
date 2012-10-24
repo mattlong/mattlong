@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 
 import boto
 from boto.s3.key import Key
@@ -16,5 +17,5 @@ last_backup_md5 = key.etag.strip('"')
 current_md5 = hashlib.md5(open(filename, 'rb').read()).hexdigest()
 
 if current_md5 != last_backup_md5:
-    print 'uploading new version [%s]' % (current_md5,)
+    print '[%s] uploading new version with md5 of [%s]' % (datetime.utcnow(), current_md5,)
     key.set_contents_from_filename(filename)
