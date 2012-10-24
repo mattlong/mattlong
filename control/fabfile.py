@@ -50,7 +50,7 @@ def deploy(use_git='false'):
             else:
                 run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
                 run('find . -name "*.pyc" | xargs rm')
-                run('find . -name ".git" | xargs rm -rf')
+                #run('find . -name ".git" | xargs rm -rf')
 
 
             with prefix(env_var_str):
