@@ -45,7 +45,7 @@ def deploy(use_git='false'):
 
             if use_git:
                 run('git fetch origin')
-                run('git reset --hard HEAD')
+                run('git reset --hard origin/master')
                 sha1 = run('git rev-parse HEAD').stdout
             else:
                 run('rsync -a --delete /home/ubuntu/repos/mattlong/ ./')
