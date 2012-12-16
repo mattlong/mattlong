@@ -26,3 +26,8 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+
+if 'NEW_RELIC_CONFIG_FILE' in os.environ:
+    import newrelic.agent
+    newrelic.agent.initialize(os.environ['NEW_RELIC_CONFIG_FILE'])
+    application = newrelic.agent.wsgi_application()(application)

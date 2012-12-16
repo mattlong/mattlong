@@ -8,3 +8,4 @@ django-debug-toolbar==0.9.4
 httplib2==0.7.5
 requests==0.13.8
 wsgiref==0.1.2
+newrelic
