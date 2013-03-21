@@ -38,7 +38,7 @@ def oauth_callback(request):
 
     try:
         r = requests.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=%s' % (access_token,))
-        email = r.json['email']
+        email = r.json()['email']
         email = settings.OAUTH_EMAIL_MAP.get(email, email)
 
         user = User.objects.get(email=email)
