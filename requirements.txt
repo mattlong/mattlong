@@ -6,6 +6,6 @@ South==0.7.5
 bpython==0.11
 django-debug-toolbar==0.9.4
 httplib2==0.7.5
-requests==0.13.8
+requests==2.20.0
 wsgiref==0.1.2
 newrelic
